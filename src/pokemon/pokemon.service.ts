@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { isValidObjectId, Model } from 'mongoose';
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { UpdatePokemonDto } from './dto/update-pokemon.dto';
 import { Pokemon } from './entities/pokemon.entity';
@@ -33,8 +33,11 @@ export class PokemonService {
  async findOne(id: string) {
     let pokemon:Pokemon
     if(!isNaN(+id)){
-      pokemon = await this.pokemonModel.findOne({no:id})
+      pokemon = await this.pokemonModel.findOne({no:id})    }
+    if(isValidObjectId(id)){
+      pokemon = await this.pokemonModel.findById(id)
     }
+
     if(!pokemon) throw new NotFoundException("Pokemon with termin "+id+" doesn't exist!")
     return pokemon;
   }
