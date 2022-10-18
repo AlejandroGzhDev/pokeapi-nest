@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
@@ -30,8 +30,13 @@ export class PokemonService {
     return this.pokemonModel.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} pokemon`;
+ async findOne(id: string) {
+    let pokemon:Pokemon
+    if(!isNaN(+id)){
+      pokemon = await this.pokemonModel.findOne({no:id})
+    }
+    if(!pokemon) throw new NotFoundException("Pokemon with termin "+id+" doesn't exist!")
+    return pokemon;
   }
 
   update(id: number, updatePokemonDto: UpdatePokemonDto) {
