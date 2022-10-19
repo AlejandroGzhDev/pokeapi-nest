@@ -20,7 +20,11 @@ npm i -g @nest/cli
 docker-compose up -d
 ```
 
+5. Crear registros en la BD con el endpoint
 
+```
+localhost:3000/api/seed
+```
 ##Stack usado
 *MondoDB
 *NestJS
