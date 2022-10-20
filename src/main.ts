@@ -16,6 +16,9 @@ async function bootstrap() {
   );
   app.setGlobalPrefix('api');
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT);
 }
 bootstrap();
+
+// 
+//mongodb+srv://pokemon_adm:yRE2dAYXoJi7U8GN@pokemoncluster.2auqzzv.mongodb.net/test
